@@ -40,7 +40,7 @@ const Navbar = () => {
                                 <a className="nav-link" href="/wishlist">Wishlist</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/order_history">Order History</a>
+                                <a className="nav-link" href="/orderreport">Order History</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="/usercart">Cart</a>

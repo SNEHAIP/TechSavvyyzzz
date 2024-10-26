@@ -26,7 +26,7 @@ const Home = () => {
             <div id="carouselExample" className="carousel slide container mt-4" data-bs-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <img src="https://tse3.mm.bing.net/th?id=OIP.2rg21HN_stF34nHKgiVq-QHaEQ&pid=Api&P=0&h=180" className="d-block w-100 rounded" alt="Surplus food" height="400px" />
+                        <img src="https://tse3.mm.bing.net/th?id=OIP.R2QNRoO9IXEHutdJehBIBQHaE6&pid=Api&P=0&h=180" className="d-block w-100 rounded" alt="Surplus food" height="400px" />
                     </div>
                     <div className="carousel-item">
                         <img src="https://tse1.mm.bing.net/th?id=OIP.RzJfmrSX00YO7lRLmf7GiAHaE8&pid=Api&P=0&h=180" className="d-block w-100 rounded" alt="Meal prep" height="400px" />

@@ -42,7 +42,7 @@ const AdminViewfeedback = () => {
           {feedbacks.length > 0 ? (
             feedbacks.map(feedback => (
               <tr key={feedback._id}>
-                <td>{feedback._id.name}</td>
+                <td>{feedback.email}</td> {/* Access the correct property for email */}
                 <td>{feedback.message}</td>
                 <td>
                   <button className="btn btn-danger" onClick={() => handleDelete(feedback._id)}>Delete</button>

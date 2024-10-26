@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import Navbar from './Navbar';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable'; // Import autotable for generating tables in PDF
 
 const UserCart = () => {
   const [cart, setCart] = useState([]);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -26,35 +26,17 @@ const UserCart = () => {
   // Calculate the total amount based on item price and quantity
   const totalAmount = cart.reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0);
 
-  // Function to generate PDF bill
-  const generatePDF = () => {
-    const doc = new jsPDF();
-    const billNumber = Math.floor(Math.random() * 100000); // Generate a random bill number
 
-    // Add title and bill number to the PDF
-    doc.setFontSize(20);
-    doc.text('Bill', 14, 20);
-    doc.setFontSize(12);
-    doc.text(`Bill Number: ${billNumber}`, 14, 30);
-
-    // Add the table headers
-    const tableColumn = ['Item Name', 'Price', 'Quantity', 'Total'];
-    const tableRows = cart.map(item => [
-      item.name,
-      item.price,
-      item.quantity,
-      (parseFloat(item.price) * item.quantity).toFixed(2),
-    ]);
-
-    // Create a table in the PDF
-    doc.autoTable(tableColumn, tableRows, { startY: 40 });
-    
-    // Add the total amount at the bottom
-    doc.text(`Total Amount: ₹${totalAmount.toFixed(2)}`, 14, doc.lastAutoTable.finalY + 10);
-
-    // Save the PDF
-    doc.save(`bill_${billNumber}.pdf`);
+  // Function to confirm order and navigate to Payment
+  const confirmOrder = () => {
+    navigate('/foodpayment', {
+      state: {
+        cart,         // Pass the entire cart array
+        totalAmount   // Pass the total amount
+      }
+    });
   };
+  
 
   return (
     <div>
@@ -82,13 +64,13 @@ const UserCart = () => {
         <div className="my-3">
           <h4>Total Amount: ₹{totalAmount.toFixed(2)}</h4> {/* Display total sum with two decimal places */}
         </div>
-         {/* Pay Now Button */}
+         {/* Confirm Order Button */}
          <div className="text-center">
           <button 
             className="btn btn-success"
-            onClick={generatePDF} // Handle pay now button click to generate PDF
+            onClick={confirmOrder} // Handle confirm order button click to navigate
           >
-            Pay Now
+            Confirm Order
           </button>
         </div>
       </div>

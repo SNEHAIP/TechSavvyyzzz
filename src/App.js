@@ -16,6 +16,9 @@ import Feedback from './components/Feedback';
 import AdminViewfeedback from './components/AdminViewfeedback';
 import About from './components/About';
 import AdminViewprofile from './components/AdminViewprofile';
+import FoodPayment from './components/FoodPayment';
+import OrderReport from './components/OrderReport';
+
 
 function App() {
   return (
@@ -39,6 +42,9 @@ function App() {
         <Route path='/feedbackmanagement' element={<AdminViewfeedback/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/profilemanagement' element={<AdminViewprofile/>}/>
+        <Route path='/foodpayment' element={<FoodPayment/>}/>
+        <Route path='/orderreport' element={<OrderReport/>}/>
+        
         
         
 
