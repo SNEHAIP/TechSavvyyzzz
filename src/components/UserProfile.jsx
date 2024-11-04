@@ -21,7 +21,6 @@ const UserProfile = () => {
             try {
                 const response = await axios.get(`http://localhost:8080/userProfile/${email}`);
                 
-                // Check if user data was returned
                 if (response.data) {
                     setUserData(response.data);
                 } else {
@@ -39,28 +38,49 @@ const UserProfile = () => {
     }, [navigate]);
 
     if (loading) {
-        return <div>Loading...</div>; // Display loading indicator
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <div style={{ fontSize: '1.5rem', color: '#007bff' }}>Loading...</div>
+            </div>
+        );
     }
 
     return (
         <div>
-            <Navbar/>
-            <center><h2>User Profile</h2></center>
+            <Navbar />
+            <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+                <h2 style={{ fontWeight: 'bold', color: '#333' }}>User Profile</h2>
+            </div>
             {userData ? (
-                <div className="container">
-                    <div className="row">
-                        <div className="col">
-                            <p><strong>Name:</strong> {userData.name}</p>
-                            <p><strong>Email:</strong> {userData.email}</p>
-                            <p><strong>Address:</strong> {userData.address}</p>
-                            <p><strong>Phone:</strong> {userData.phone}</p>
-                            <p><strong>Gender:</strong> {userData.gender}</p>
-                        </div>
+                <div style={{ display: 'flex', justifyContent: 'center', padding: '1rem' }}>
+                    <div style={{
+                        width: '100%',
+                        maxWidth: '500px',
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        padding: '2rem',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                        backgroundColor: '#f9f9f9'
+                    }}>
+                        <p style={{ fontSize: '1.1rem', color: '#555', marginBottom: '0.5rem' }}>
+                            <strong style={{ color: '#333' }}>Name:</strong> {userData.name}
+                        </p>
+                        <p style={{ fontSize: '1.1rem', color: '#555', marginBottom: '0.5rem' }}>
+                            <strong style={{ color: '#333' }}>Email:</strong> {userData.email}
+                        </p>
+                        <p style={{ fontSize: '1.1rem', color: '#555', marginBottom: '0.5rem' }}>
+                            <strong style={{ color: '#333' }}>Address:</strong> {userData.address}
+                        </p>
+                        <p style={{ fontSize: '1.1rem', color: '#555', marginBottom: '0.5rem' }}>
+                            <strong style={{ color: '#333' }}>Phone:</strong> {userData.phone}
+                        </p>
+                        <p style={{ fontSize: '1.1rem', color: '#555', marginBottom: '0.5rem' }}>
+                            <strong style={{ color: '#333' }}>Gender:</strong> {userData.gender}
+                        </p>
                     </div>
-                    
                 </div>
             ) : (
-                <p>No user data found.</p>
+                <p style={{ textAlign: 'center', color: '#888' }}>No user data found.</p>
             )}
         </div>
     );

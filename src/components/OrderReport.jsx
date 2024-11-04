@@ -1,41 +1,46 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 
 const OrderReport = () => {
-    const [orders, setOrders] = useState([]); // State to hold the user's orders
-    const [loading, setLoading] = useState(true); // State to handle loading state
-    const [error, setError] = useState(null); // State to handle errors
-  
-    useEffect(() => {
-      const fetchOrderHistory = async () => {
-        const userId = sessionStorage.getItem('userid'); // Get the user ID from session storage
-        
-        try {
-          const response = await fetch(`http://localhost:8080/orders/${userId}`); // Replace with your actual API URL
-          
-          if (!response.ok) {
-            throw new Error('Failed to fetch orders');
-          }
-  
-          const data = await response.json(); // Parse the JSON response
-          setOrders(data); // Set the orders state
-        } catch (error) {
-          setError(error.message); // Set the error state if there's an error
-        } finally {
-          setLoading(false); // Set loading to false after fetching
+  const [orders, setOrders] = useState([]); // State to hold the user's orders
+  const [loading, setLoading] = useState(true); // State to handle loading state
+  const [error, setError] = useState(null); // State to handle errors
+
+  useEffect(() => {
+    const fetchOrderHistory = async () => {
+      const userId = sessionStorage.getItem('userid'); // Get the user ID from session storage
+
+      try {
+        if (!userId) throw new Error("User ID not found in session.");
+
+        const response = await fetch(`http://localhost:8080/orders/${userId}`); // Replace with your actual API URL
+        if (!response.ok) {
+          throw new Error('Failed to fetch orders');
         }
-      };
-  
-      fetchOrderHistory(); // Call the fetch function
-    }, [])
+
+        const data = await response.json(); // Parse the JSON response
+        setOrders(data); // Set the orders state
+      } catch (error) {
+        setError(error.message); // Set the error state if there's an error
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
+    };
+
+    fetchOrderHistory(); // Call the fetch function
+  }, []);
+
   return (
     <div>
-
-<div>
-      <Navbar/>
+      <Navbar />
       <div className="container">
         <h3>Your Order History</h3>
-        {orders.length > 0 ? (
+        
+        {loading ? (
+          <p>Loading...</p> // Loading message
+        ) : error ? (
+          <p className="text-danger">{error}</p> // Error message
+        ) : orders.length > 0 ? (
           <ul className="list-group">
             {orders.map((order, index) => (
               <li key={index} className="list-group-item">
@@ -56,9 +61,7 @@ const OrderReport = () => {
         )}
       </div>
     </div>
+  );
+};
 
-    </div>
-  )
-}
-
-export default OrderReport
+export default OrderReport;

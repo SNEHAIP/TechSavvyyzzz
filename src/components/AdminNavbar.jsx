@@ -1,53 +1,139 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AdminNavbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear session storage
     sessionStorage.clear();
-    // Redirect to login page
     navigate("/");
   };
 
   return (
     <div>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">MEALMATE</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+      <nav 
+        className="navbar navbar-expand-lg" 
+        style={{
+          backgroundColor: "#f8f9fa",
+          padding: "10px 20px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
+        }}
+      >
+        <div className="container-fluid">
+          <a 
+            className="navbar-brand" 
+            href="#" 
+            style={{
+              fontSize: "24px",
+              fontWeight: "bold",
+              color: "#000",
+              fontFamily: "Georgia, serif",
+              letterSpacing: "1px",
+            }}
+          >
+            MEALMATE
+          </a>
+          <button 
+            className="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation"
+            style={{
+              border: "none"
+            }}
+          >
+            <span className="navbar-toggler-icon" />
           </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/adminhome">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/AddFood">Food Management</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/profilemanagement">Profile Management</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/feedbackmanagement">Feedback Management</a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="/order_historymanagement">Order-History</a>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-auto" style={{ alignItems: "center" }}>
+              <li className="nav-item">
+                <a 
+                  className="nav-link active" 
+                  aria-current="page" 
+                  href="/adminhome"
+                  style={{
+                    color: "#555",
+                    fontWeight: "500",
+                    padding: "8px 15px",
+                  }}
+                >
+                  Home
+                </a>
               </li>
               <li className="nav-item">
-                <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
+                <a 
+                  className="nav-link" 
+                  href="/AddFood"
+                  style={{
+                    color: "#555",
+                    fontWeight: "500",
+                    padding: "8px 15px",
+                  }}
+                >
+                  Food Management
+                </a>
               </li>
-
-
+              <li className="nav-item">
+                <a 
+                  className="nav-link" 
+                  href="/profilemanagement"
+                  style={{
+                    color: "#555",
+                    fontWeight: "500",
+                    padding: "8px 15px",
+                  }}
+                >
+                  Profile Management
+                </a>
+              </li>
+              <li className="nav-item">
+                <a 
+                  className="nav-link" 
+                  href="/feedbackmanagement"
+                  style={{
+                    color: "#555",
+                    fontWeight: "500",
+                    padding: "8px 15px",
+                  }}
+                >
+                  Feedback Management
+                </a>
+              </li>
+              <li className="nav-item">
+                <a 
+                  className="nav-link" 
+                  href="/order_historymanagement"
+                  style={{
+                    color: "#555",
+                    fontWeight: "500",
+                    padding: "8px 15px",
+                  }}
+                >
+                  Order History
+                </a>
+              </li>
+              <li className="nav-item">
+                <button 
+                  className="btn btn-danger ms-3" 
+                  onClick={handleLogout}
+                  style={{
+                    fontWeight: "500",
+                    padding: "8px 15px",
+                    borderRadius: "5px"
+                  }}
+                >
+                  Logout
+                </button>
+              </li>
             </ul>
           </div>
         </div>
       </nav>
     </div>
-  )
-}
+  );
+};
 
-export default AdminNavbar
+export default AdminNavbar;

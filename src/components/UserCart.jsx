@@ -26,17 +26,18 @@ const UserCart = () => {
   // Calculate the total amount based on item price and quantity
   const totalAmount = cart.reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0);
 
-
   // Function to confirm order and navigate to Payment
   const confirmOrder = () => {
+    const userId = sessionStorage.getItem('userid'); // Get the logged-in user's ID again for navigation
+
     navigate('/foodpayment', {
       state: {
         cart,         // Pass the entire cart array
-        totalAmount   // Pass the total amount
+        totalAmount,  // Pass the total amount
+        userId        // Pass the userId
       }
     });
   };
-  
 
   return (
     <div>
@@ -78,4 +79,4 @@ const UserCart = () => {
   );
 };
 
-export default UserCart;
+export default UserCart; 

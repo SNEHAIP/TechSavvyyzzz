@@ -11,16 +11,16 @@ const AdminHome = () => {
             <div id="carouselExample" class="carousel slide">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="https://tse1.mm.bing.net/th?id=OIP.Df0V1RgHsnhrxZ1ZrDZQfwHaE8&pid=Api&P=0&h=180" class="d-block w-100" alt="..." height="400px" width="250px" />
+                        <img src="https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=600" class="d-block w-100" alt="..." height="400px" width="250px" />
                     </div>
                     <div class="carousel-item">
-                        <img src="https://tse2.mm.bing.net/th?id=OIP.Z0evIe-ip-oYZwPesVAAPwHaFj&pid=Api&P=0&h=180" class="d-block w-100" alt="..." height="400px" width="250px" />
+                        <img src="https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg?auto=compress&cs=tinysrgb&w=600" class="d-block w-100" alt="..." height="400px" width="250px" />
                     </div>
                     <div class="carousel-item">
-                        <img src="https://tse3.mm.bing.net/th?id=OIP.xW8jA4d3ayue0RlYAvDtjAHaE8&pid=Api&P=0&h=180" class="d-block w-100" alt="..." height="400px" width="250px" />
+                        <img src="https://images.pexels.com/photos/725991/pexels-photo-725991.jpeg?auto=compress&cs=tinysrgb&w=600" class="d-block w-100" alt="..." height="400px" width="250px" />
                     </div>
                     <div class="carousel-item">
-                        <img src="https://tse3.mm.bing.net/th?id=OIP._TlsPqo9cdqiP_sodVVYSQHaE0&pid=Api&P=0&h=180" class="d-block w-100" alt="..." height="400px" width="250px" />
+                        <img src="https://images.pexels.com/photos/723198/pexels-photo-723198.jpeg?auto=compress&cs=tinysrgb&w=600" class="d-block w-100" alt="..." height="400px" width="250px" />
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">

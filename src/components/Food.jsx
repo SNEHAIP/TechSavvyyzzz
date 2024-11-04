@@ -31,42 +31,65 @@ const Food = () => {
 
   const addToCart = (item) => {
     const quantity = quantities[item._id] || 1;
-    const userId = sessionStorage.getItem('userid'); 
+    const userId = sessionStorage.getItem('userid');
+
     if (!userId) {
       alert('User not logged in!');
       return;
     }
 
+    // Prepare item with additional data
     const itemWithQuantity = { ...item, quantity, userid: userId };
     const updatedCart = [...cart, itemWithQuantity];
+
+    // Update cart locally
     setCart(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
-    setMessage(`${item.name} added to cart with quantity ${quantity} successfully!`);
-    setTimeout(() => setMessage(''), 2000);
+
+    // Send quantity and item._id to the backend
+    const data = {
+      userId: userId,
+      itemId: item._id,
+      quantity: quantity
+    };
+
+    axios.post("http://localhost:8080/quantityUpdate", data)
+      .then(response => {
+        console.log(response.data);  // Handle successful response from backend
+        // Display message to the user
+        setMessage(`${item.name} added to cart with quantity ${quantity} successfully!`);
+        setTimeout(() => setMessage(''), 2000);
+        alert(`${item.name} added to cart with quantity ${quantity} successfully!`);
+      })
+      .catch(error => {
+        console.error("There was an error updating the quantity!", error);  // Handle error
+      });
+
   };
 
-// Handle add to wishlist
-const addToWishlist = (item) => {
-  const userId = sessionStorage.getItem('userid'); // Get logged-in user's id
-  if (!userId) {
-    alert('User not logged in!');
-    return;
-  }
 
-  const itemWithUser = { ...item, userid: userId }; // Attach userid to the wishlist item
+  // Handle add to wishlist
+  const addToWishlist = (item) => {
+    const userId = sessionStorage.getItem('userid'); // Get logged-in user's id
+    if (!userId) {
+      alert('User not logged in!');
+      return;
+    }
 
-  // Check if item already exists in wishlist
-  const existingItem = wishlist.find(wishlistItem => wishlistItem._id === item._id);
-  const updatedWishlist = existingItem
-    ? wishlist // If item is already in wishlist, do nothing (or you can choose to update)
-    : [...wishlist, itemWithUser]; // Add new item
+    const itemWithUser = { ...item, userid: userId }; // Attach userid to the wishlist item
 
-  setWishlist(updatedWishlist);
-  localStorage.setItem('wishlist', JSON.stringify(updatedWishlist)); // Save updated wishlist to localStorage
+    // Check if item already exists in wishlist
+    const existingItem = wishlist.find(wishlistItem => wishlistItem._id === item._id);
+    const updatedWishlist = existingItem
+      ? wishlist // If item is already in wishlist, do nothing (or you can choose to update)
+      : [...wishlist, itemWithUser]; // Add new item
 
-  setMessage(`${item.name} added to wishlist!`);
-  setTimeout(() => setMessage(''), 2000);
-};
+    setWishlist(updatedWishlist);
+    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist)); // Save updated wishlist to localStorage
+
+    setMessage(`${item.name} added to wishlist!`);
+    setTimeout(() => setMessage(''), 2000);
+  };
 
 
   const goToCart = () => {
@@ -115,7 +138,7 @@ const addToWishlist = (item) => {
                       <button className="btn btn-secondary" onClick={() => addToWishlist(value)} >
                         Add to Wishlist
                       </button>
-                      
+
                     </div>
                   </div>
                 </div>

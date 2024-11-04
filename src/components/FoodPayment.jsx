@@ -8,15 +8,38 @@ import axios from 'axios';
 const FoodPayment = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { cart = [], totalAmount = 0 } = location.state || {};
+    const { cart = [], totalAmount = 0, userId } = location.state || {}; // Destructure userId
     const [selectedPayment, setSelectedPayment] = useState(null);
     const qrCodeRef = useRef();
 
     useEffect(() => {
         if (cart.length === 0) {
             navigate('/usercart'); // Redirect if cart is empty
+        } else {
+            saveCart(); // Optionally, you might want to call this here as well
         }
     }, [cart, navigate]);
+
+    const saveCart = async () => {
+        try {
+            if (!userId) {
+                console.error("User ID is missing");
+                return;
+            }
+
+            console.log("Saving cart with userId:", userId);
+            console.log("Cart items:", cart);
+
+            const response = await axios.post('http://localhost:8080/SaveCart', {
+                userId,
+                items: cart
+            });
+
+            console.log("Cart saved successfully:", response.data);
+        } catch (error) {
+            console.error("Error saving cart:", error);
+        }
+    };
 
     const qrDataGPay = `Payment of ₹${totalAmount} via GPay`;
     const qrDataPhonePe = `Payment of ₹${totalAmount} via PhonePe`;
@@ -25,32 +48,28 @@ const FoodPayment = () => {
         setSelectedPayment(paymentMethod);
     };
 
-    const updateQuantity = async (orderItems) => {
+    // Update quantities by decrementing based on cart items
+    const updateQuantitiesBulk = async () => {
         try {
-            for (const item of orderItems) {
-                // Log the ID of each item before making the request
-                console.log("Fetching item with ID:", item._id);
-                
-                // Fetch the current item quantity
-                const response = await axios.get(`http://localhost:8080/foodItem/${item._id}`);
-                const currentQuantity = response.data.quantity;
-    
-                // Calculate the new quantity
-                const newQuantity = currentQuantity - item.bookedQuantity;
-    
-                // Update the database
-                await axios.put(`http://localhost:8080/foodItem/${item._id}`, { quantity: newQuantity });
-            }
+            const updateData = cart.map(item => ({
+                foodId: item.foodId,
+                quantity: item.quantity
+            }));
+
+            await axios.put('http://localhost:8080/foodItems/decrementQuantities', { updateData });
+            console.log("Quantities decremented successfully");
         } catch (error) {
-            console.error("Failed to update quantities:", error);
+            console.error("Failed to decrement quantities:", error);
         }
     };
-    
-    
 
-    const handlePaymentSuccess = async () => {
-        alert('Payment successful!');
-        await updateQuantity(cart);  // Update quantities after payment
+    const clearCart = async () => {
+        try {
+            await axios.delete(`http://localhost:8080/clearCart/${userId}`);
+            console.log("Cart cleared successfully");
+        } catch (error) {
+            console.error("Error clearing the cart:", error);
+        }
     };
 
     const generatePDF = () => {
@@ -73,6 +92,17 @@ const FoodPayment = () => {
         doc.autoTable(tableColumn, tableRows, { startY: 40 });
         doc.text(`Total Amount: ₹${totalAmount.toFixed(2)}`, 14, doc.lastAutoTable.finalY + 10);
         doc.save(`bill_${billNumber}.pdf`);
+    };
+
+    const handlePaymentSuccess = async () => {
+        alert('Payment successful!');
+        await updateQuantitiesBulk(); // Decrement quantities based on the cart
+        await saveCart(); // Save the cart after payment success
+        await clearCart(); // Clear the cart after payment success
+        
+        // Generate and download the invoice PDF after payment is successful
+        generatePDF(); // Automatically download the bill PDF
+        navigate(0); // Reloads the current page to reflect changes
     };
 
     return (
@@ -165,29 +195,12 @@ const FoodPayment = () => {
                         >
                             Simulate {selectedPayment} Payment Success
                         </button>
-
-                        <button onClick={generatePDF} style={{
-                            padding: '12px 24px',
-                            backgroundColor: '#007bff',
-                            color: '#fff',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            margin: '0 10px',
-                            transition: 'background-color 0.3s ease',
-                            fontSize: '16px'
-                        }}
-                            onMouseEnter={e => e.target.style.backgroundColor = '#0056b3'}
-                            onMouseLeave={e => e.target.style.backgroundColor = '#007bff'}
-                        >
-                            Download Invoice
-                        </button>
                     </div>
                 </>
             )}
 
             <div style={{ marginTop: '30px' }}>
-                <button onClick={() => navigate('/usercart')} style={{
+                <button onClick={() => navigate('/FoodPayment')} style={{
                     padding: '12px 24px',
                     backgroundColor: '#007bff',
                     color: '#fff',

@@ -21,10 +21,10 @@ const Adminviewfood = () => {
   const handleUpdateQuantity = (name, currentQuantity) => {
     const removeQuantity = quantityToRemove[name] || 0;
 
-    if (removeQuantity > currentQuantity) {
-      alert('Cannot remove more than available quantity');
-      return;
-    }
+    // if (removeQuantity > currentQuantity) {
+    //   alert('Cannot remove more than available quantity');
+    //   return;
+    // }
 
     axios.put(`http://localhost:8080/deletefood/${name}`, { quantityToRemove: removeQuantity })
       .then((response) => {
@@ -70,7 +70,7 @@ const Adminviewfood = () => {
                         max={value.quantity}
                         value={quantityToRemove[value.name] || ''}
                         onChange={(e) => handleInputChange(value.name, e.target.value)}
-                        placeholder="Remove quantity"
+                        placeholder="update quantity"
                         className="form-control mb-2"
                       />
                       <button
