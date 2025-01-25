@@ -24,7 +24,7 @@ const Navbar = () => {
                         fontFamily: 'Georgia, serif',
                         textDecoration: 'none'
                     }}>
-                        MEALMATE
+                        GREEN SIP
                     </a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@ const Navbar = () => {
                         <ul className="navbar-nav ms-auto" style={{ alignItems: 'center' }}>
                             {[
                                 { name: "Home", link: "/home" },
-                                { name: "Food", link: "/userfood" },
+                              //  { name: "Food", link: "/userfood" },
                                 { name: "Profile", link: "/userprofile" },
                                 { name: "Feedback", link: "/feedback" },
                                 { name: "About", link: "/about" },
